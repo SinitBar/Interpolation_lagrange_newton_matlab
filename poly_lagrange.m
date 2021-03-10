@@ -11,10 +11,15 @@ for i = 1:count_nodes
     for j = 1:count_nodes
         if (i~=j)
             denominator = denominator*(nodes(i) - nodes(j));
-            numerator = conv(numerator, [-nodes(j) 1]); %домножаем на скобку вида (x-nodes(i))
+            numerator = conv(numerator, [1, -nodes(j)]); %домножаем на скобку вида (x-nodes(j))
         end
     end
     numerator = numerator.*(f(i)/denominator);
     interpolation_polinom = interpolation_polinom + numerator;
 end
-    
+%interpolation_polinom = interpolation_polinom(end:-1:1); % переворачиваем
+%массив, потому что он хранится в виде от больших степеней к меньшим,
+% а нам надо наоборот 
+% если последние две строчки закомментированы, то массив возвращает
+% коэффиценты от большей степени икс к меньшей, аналогичная строчка в
+% draw_all тоже должна быть закомментирована
